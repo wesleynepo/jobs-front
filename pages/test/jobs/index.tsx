@@ -18,7 +18,7 @@ export async function getServerSideProps() {
 }
 
 function Jobs({ availableJobs }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [showJobs, setShowJobs] = useState(availableJobs.jobs.slice(0, 9))
+  const [showJobs, setShowJobs] = useState(availableJobs.jobs)
 
   const orderByCompanyName = () => {
     setShowJobs(availableJobs.jobs.sort((a, b) => a.companyName.localeCompare(b.companyName)))
@@ -40,7 +40,7 @@ function Jobs({ availableJobs }: InferGetServerSidePropsType<typeof getServerSid
         <ListButton onClick={filterLastSevenDays} label="Show last 7 days published" />
       </Stack>
       <VStack width={{base: '100%', md:'75%'}}>
-        {showJobs.map((job, index) => <CardJob key={index} company={job.companyName} title={job.jobTitle} logoUrl={job.companyLogo} shortDescription={job.snippets[0]} />)}
+        {showJobs.slice(0, 10).map((job, index) => <CardJob key={index} company={job.companyName} title={job.jobTitle} logoUrl={job.companyLogo} shortDescription={job.snippets[0]} />)}
       </VStack>
     </Center>
   )
